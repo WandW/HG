@@ -11,4 +11,5 @@ public interface IAlbumsServices {
 	public void delete(java.lang.Integer id);	
 	public List list();	
 	public void update(Album users);	
+	public Album open(int users);	
 }

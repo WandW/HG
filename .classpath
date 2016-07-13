@@ -61,5 +61,7 @@
 	<classpathentry kind="lib" path="D:/lib/51CTO下载-struts2文件上传jar包集合/struts2文件上传jar包集合/struts2-core-2.1.6.jar"/>
 	<classpathentry kind="lib" path="D:/lib/51CTO下载-struts2文件上传jar包集合/struts2文件上传jar包集合/tiles-jsp-2.0.6.jar"/>
 	<classpathentry kind="lib" path="D:/lib/51CTO下载-struts2文件上传jar包集合/struts2文件上传jar包集合/xwork-2.1.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/json_simple-1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsonplugin-0.24.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

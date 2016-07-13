@@ -10,7 +10,7 @@ import com.entity.User;
 
 public class AlbumsServicesImpl implements IAlbumsServices {
 	private IAlbumsDAO IAlbumsDao;
-	
+	final static	String album_Id="album_Id";
 	public void setIAlbumsDao(IAlbumsDAO iAlbumsDao) {
 		IAlbumsDao = iAlbumsDao;
 	}
@@ -39,5 +39,10 @@ public class AlbumsServicesImpl implements IAlbumsServices {
 		IAlbumsDao.save(album);
 	}	
 	
-
+	public Album open(int id){
+	List list=	IAlbumsDao.findByProperty(album_Id, id);
+	System.out.println("listsize:"+list.size());
+	Album album = (Album) list.get(0);
+		return album;
+	};	
 }

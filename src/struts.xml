@@ -22,9 +22,12 @@
 		</action>
 		<action name="albumadd" class="AlbumsAction" method="doadd">
 		</action>
+		<action name="albumopen" class="AlbumsAction" method="openalbums">
+		</action>
 		<action name="singsadd" class="SingsAction" method="singsadd">
 		</action>
-		
+		<action name="albumsings" class="SingsAction" method="albumsings">
+		</action>
 	</package>
 	<constant name="struts.multipart.maxSize" value="10485760"/> 
 	<constant name="struts.multipart.saveDir" value="/tmp"></constant>

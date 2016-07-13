@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import com.dao.IUsersDAO;
 import com.dao.UsersDAOImpl;
 import com.entity.Sing;
@@ -81,6 +84,30 @@ public class SingsAction{
 		out.println("成功"+album_Id.length);
 //		out.println("<script language='javascript'>"+"alert('添加成功!');window.location.href='./list.action';"+"</script>");
 		return null;
+	}
+	/**
+	 * 查看指定专辑歌曲
+	 * @return
+	 * @throws IOException
+	 */
+	public void albumsings() throws IOException{
+		response.setCharacterEncoding("GB2312");
+		
+		PrintWriter out = response.getWriter();
+		String s = request.getParameter("id");
+		int id ;
+		id=Integer.parseInt(s);
+	List list=	ISingsServices.findByProperty(id);
+	JSONArray jsonArray = new JSONArray();
+		for(int i=0;i<list.size();i++){
+			Sing sing = (Sing) list.get(i);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("sing_Name", sing.getSing_Name());
+			jsonObject.put("sing_Id", sing.getSing_Id());
+			jsonObject.put("album_Id", sing.getAlbum_Id());
+			jsonArray.add(jsonObject);
+		}
+		out.print(jsonArray.toJSONString());
 	}
 	public String[] getSing_Name() {
 		return sing_Name;

@@ -104,7 +104,14 @@ public class AlbumsAction{
 	}
 	
 
-	
+	public void openalbums() throws IOException {
+		PrintWriter out = response.getWriter();
+		String s =request.getParameter("id");
+		int id ;
+		id=Integer.parseInt(s);
+	Album album=	IAlbumsServices.open(id);
+	out.print(album.getAlbum_Name());
+	}
 
 
 	/**
