@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+	</bean>
+
+	<bean id="txManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="get*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="find*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="*" read-only="false" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="txDAO" expression="execution (* com.dao.*.*(..))" />
+		<aop:advisor pointcut-ref="txDAO" advice-ref="txAdvice" />
+	</aop:config>
+
+	<bean id="UsersDAOImpl" class="com.dao.UsersDAOImpl" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />		
+	</bean>
+	<bean id="UsersServices" class="com.services.UsersServicesImpl" scope="prototype">
+		<property name="IUsersDao" ref="UsersDAOImpl" />
+	</bean>
+	<bean id="UsersAction" class="com.web.action.UsersAction" scope="prototype">
+		<property name="IUsersServices" ref="UsersServices" />
+	</bean>
+<bean id="AlbumsDAOImpl" class="com.dao.AlbumsDAOImpl" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />		
+	</bean>
+	<bean id="AlbumsServices" class="com.services.AlbumsServicesImpl" scope="prototype">
+		<property name="IAlbumsDao" ref="AlbumsDAOImpl" />
+	</bean>
+	<bean id="AlbumsAction" class="com.web.action.AlbumsAction" scope="prototype">
+		<property name="IAlbumsServices" ref="AlbumsServices" />
+	</bean>
+	<bean id="SingsDAOImpl" class="com.dao.SingsDAOImpl" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />		
+	</bean>
+	<bean id="SingsServices" class="com.services.SingsServicesImpl" scope="prototype">
+		<property name="ISingsDao" ref="SingsDAOImpl" />
+	</bean>
+	<bean id="SingsAction" class="com.web.action.SingsAction" scope="prototype">
+		<property name="ISingsServices" ref="SingsServices" />
+	</bean>
+</beans>

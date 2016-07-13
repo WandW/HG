@@ -1,0 +1,67 @@
+--查看数据库中是否已经存在hrDB数据库
+use master
+go
+if exists(select * from sysdatabases where name='ssh2DB')
+drop database ssh2DB
+go
+
+--先在f新建文件夹database
+--创建数据库hrDB
+create database ssh2DB
+on
+(
+ NAME='F:\database\ssh2DB_data',  --主数据文件的逻辑名
+ FILENAME='F:\database\ssh2DB_data.mdf',  --主数据文件的物理名
+ SIZE=5mb,  --主数据文件初始大小
+ MAXSIZE=100mb,  --主数据文件增长的最大值
+ FILEGROWTH=15%   --主数据文件的增长率
+)
+LOG ON
+(
+  NAME='F:\database\ssh2DB_log',
+  FILENAME='F:\database\ssh2DB_log.ldf',
+  SIZE=2mb,
+  FILEGROWTH=1MB
+)
+
+use ssh2DB
+
+
+CREATE TABLE users(
+	[user_Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[user_Name] [varchar](20) NOT NULL,
+	[pwd] [varchar](50) NOT NULL,
+	[account] [varchar](50) NOT NULL,
+	[user_Icon] [varchar](100) NOT NULL
+)
+CREATE TABLE albums(
+	[album_Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[album_Name] [varchar](20) NOT NULL,
+	[artist_Name] [varchar](50) NOT NULL,
+	[create_Date] [varchar](50) NOT NULL,
+	[icon] [varchar](100) NOT NULL,
+	[spec] [varchar](100) NOT NULL,
+	[synopsis] [varchar](100) NOT NULL,
+	[price] [int] NOT NULL
+)
+CREATE TABLE sings(
+	[sing_Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[album_Id] [int] NOT NULL,
+	[sing_Name] [varchar](50) NOT NULL,
+	
+)
+CREATE TABLE orders(
+	[order_Id] [int] IDENTITY(1,1) primary key NOT NULL,
+	[user_Id] [int] NOT NULL,
+	[state] [int] NOT NULL,
+	[time] [varchar](50) NOT NULL
+)
+
+select * from [users]
+select * from [albums]
+select * from [sings]
+select * from [orders]
+insert into users(user_Name,pwd,account,user_Icon)values('路人甲A','4221490','q4221490','****')
+insert into albums(album_Name,artist_Name,create_Date,icon,spec,synopsis,price)values('专辑A','yanyan','2016-6-2','#','FLAC','言神出品',998)
+insert into sings(album_Id,sing_Name)values(1,'月光')
+insert into orders(user_Id,state,time)values(1,0,'2016-6-3')
